@@ -1,12 +1,13 @@
 import java.lang.Math;
 import java.util.Random;
 import javax.swing.JPanel;
+import java.math.BigDecimal;
 class ABC extends Thread{
 	private int[][][] problem;
 	private int[][] emptyCell;
 	private int maxCycle, cycle;
 	private int employedSize, numCell, onlookerSize, scoutSize, maxEmptyCell, fitestBee=-1;
-	private double maxFit=0;
+	private BigDecimal maxFit= new BigDecimal(0);
 	private Bee[] bee;
 	private Bee bestBee;
 	private Subgrid[] subgrid;
@@ -35,24 +36,24 @@ class ABC extends Thread{
 	
 	public void run(){
 		Bee v;
-		double sumFitness=0, beeFitness=0;
+		BigDecimal sumFitness= new BigDecimal(0);
+		BigDecimal beeFitness= new BigDecimal(0);
 
 		//actual
-		for(cycle=0; cycle<maxCycle && maxFit!=1; cycle++){
-			sumFitness=0;
+		for(cycle=0; cycle<maxCycle && (maxFit.compareTo(new BigDecimal(1))!=0); cycle++){
+			sumFitness= new BigDecimal(0);
 
 			//employed bee phase
-			for(int i=0; i<bee.length && maxFit!=1; i++){
+			for(int i=0; i<bee.length && (maxFit.compareTo(new BigDecimal(1))!=0); i++){
 				v=neighborhoodSearch(i);								// neighborhood search
 				bee[i]=greedy.greedySearch(bee[i],v);			//greedy
 				beeFitness=bee[i].getFitness();
-				maxFit=getMaxFit(maxFit, beeFitness, i);		//storing of bestbee
-				sumFitness=sumFitness+beeFitness;
+				maxFit=getMaxFit(maxFit, beeFitness, i);
+				sumFitness=sumFitness.add(beeFitness);
 				}
-
 			//onlooker bee phase
-			for(int i=0; i<bee.length && maxFit!=1; i++){
-				double probability=bee[i].getFitness()/sumFitness;
+			for(int i=0; i<bee.length && (maxFit.compareTo(new BigDecimal(1))!=0); i++){
+				double probability=(bee[i].getFitness().divide(sumFitness, new java.math.MathContext(100))).doubleValue();
 				int maxOnlooker=(int)((probability)*onlookerSize);
 				for(int count=0; count<maxOnlooker; count++){
 					v=neighborhoodSearch(i);											// neighborhood search
@@ -61,21 +62,21 @@ class ABC extends Thread{
 					}
 				}
 
-			if(scoutSize>0 && maxFit!=1){
-				double maxMin=1;
+			if(scoutSize>0 && (maxFit.compareTo(new BigDecimal(1))!=0)){
+				BigDecimal maxMin= new BigDecimal(1);
 				int minSet[]=new int[scoutSize];	//a set of indices containing the minimum fitness of scoutSize bees
 				for(int i=0; i<scoutSize; i++){
 					minSet[i]=i;
-					if(maxMin>bee[i].getFitness())
+					if(maxMin.compareTo(bee[i].getFitness())>0)
 						maxMin=bee[i].getFitness();
 					}
 				for(int i=scoutSize; i<bee.length; i++){
-					if(maxMin>=bee[i].getFitness()){
+					if(maxMin.compareTo(bee[i].getFitness())>=0){
 						boolean hasBeenPopped=false;
-						double temp=bee[i].getFitness();
+						BigDecimal temp=bee[i].getFitness();
 						for(int ctr=0; ctr<scoutSize; ctr++){
-							double curFitness=bee[minSet[ctr]].getFitness();
-							if(temp<curFitness)
+							BigDecimal curFitness=bee[minSet[ctr]].getFitness();
+							if(temp.compareTo(curFitness)<0)
 								temp=curFitness;
 							if(!hasBeenPopped && curFitness==maxMin){
 								hasBeenPopped=true;
@@ -85,7 +86,7 @@ class ABC extends Thread{
 						maxMin=temp;
 						}
 					}
-				for(int i=0; i<scoutSize && maxFit!=1; i++){
+				for(int i=0; i<scoutSize && (maxFit.compareTo(new BigDecimal(1))!=0); i++){
 					v=new Bee(getProblemCopy(), subgrid);											//generating of new Solution
 					bee[minSet[i]]=greedy.greedySearch(bee[minSet[i]],v);					//greedy
 					maxFit=getMaxFit(maxFit, bee[minSet[i]].getFitness(), minSet[i]);	//storing of best bee
@@ -98,7 +99,7 @@ class ABC extends Thread{
 	}
 	
 	protected boolean isDone(){
-		if(cycle>=maxCycle ||maxFit==1)
+		if(cycle>=maxCycle ||(maxFit.compareTo(new BigDecimal(1))==0))
 			return true;
 		return false;
 	}
@@ -158,7 +159,7 @@ class ABC extends Thread{
 	protected String getCycles(){
 		return cycle+"";
 		}
-	protected double getFitness(){
+	protected BigDecimal getFitness(){
 		return bestBee.getFitness();
 		}
 	protected int[][][] getProblemCopy(){
@@ -173,8 +174,8 @@ class ABC extends Thread{
 			}
 		return copy;
 		}
-	private double getMaxFit(double maxFit, double beeFitness, int i){
-		if(maxFit<=beeFitness){
+	private BigDecimal getMaxFit(BigDecimal maxFit, BigDecimal beeFitness, int i){
+		if(maxFit.compareTo(beeFitness)<=0){
 			maxFit=beeFitness;
 			bestBee.copyProblem(bee[i].getCopy());
 			bestBee.setFitness(beeFitness);

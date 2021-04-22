@@ -30,7 +30,7 @@ public class SudokuBee2{
 	private Tunog snd, error;
 	private JFrame frame=new JFrame();
 	private Container container=frame.getContentPane();
-	private String saveFileName="", curFile="";
+	private String saveFileName="", curFile="File";
 
 	SudokuBee2(){
 		frame.setTitle(" Sudoku Bee");
@@ -62,7 +62,7 @@ public class SudokuBee2{
 				gameMode=true;
 				isSolved=false;
 				try{
-					SudokuRun sr2 = new SudokuRun(getSudokuBee());
+					SudokuRun sr2 = new SudokuRun(getSudokuBee(), false);
 					sr2.start(); //generate a puzzle
 					}
 				catch(Exception ee){
@@ -190,6 +190,10 @@ public class SudokuBee2{
 				}
 			}
 		}
+	protected void popUpRelay(int size){
+		popUp(size);
+	}
+
 	private void popUp(int size){
 		try{
 			pop.decompose();
@@ -218,8 +222,9 @@ public class SudokuBee2{
 							if((ctr+1)%subDimY==0 && ctr>0)
 								xCount=-1;
 							}
-						if(new Validator(sudoku, subgrid).checkAnswer())
+						if(new Validator(sudoku, subgrid).checkAnswer()){
 							exit(5);
+						}
 						}
 					}
 				});
@@ -409,7 +414,7 @@ public class SudokuBee2{
 					else
 						gameMode=false;
 					try{
-						SudokuRun sr = new SudokuRun(getSudokuBee());
+						SudokuRun sr = new SudokuRun(getSudokuBee(), false);
 						sr.start();
 						}
 					catch(Exception ee){
@@ -426,39 +431,19 @@ public class SudokuBee2{
 			});
 		}
 
+	protected void statusRelay(String str){
+		status(str);
+	}
+
 	private void status(String str){
 		status=new UIStatus(str, GP.panel[4]);
-		status.yes.addActionListener(new ActionListener(){
+		status.yes.addActionListener(new ActionListener(){ //creating user made sudoku
 			public void actionPerformed(ActionEvent e){
-				int sudoku[][][]=board.getSudokuArray();
-				Subgrid subgrid[]=new Subgrid[sudoku.length];
-				int subDimY=(int)Math.sqrt(sudoku.length);
-				int subDimX=sudoku.length/subDimY;
-				for(int ctr=0, xCount=0; ctr<sudoku.length; ctr++, xCount++){
-					subgrid[ctr]=new Subgrid(xCount*subDimX, ((ctr/subDimY)*subDimY), subDimX, subDimY);
-					if((ctr+1)%subDimY==0 && ctr>0)
-						xCount=-1;
-					}
-				Validator val=new Validator(sudoku, subgrid);
-				if(val.checkValidity()){
-					isAns=true;
-					status.decompose();
-					status=null;
-					pop.decompose();
-					pop=null;
-					board.decompose();
-					board=null;
-					board(sudoku,false);
-					game.setVisible(true);
-					popUp(sudoku.length);
-					status("");
-					}
-				else
-					{
-					exit(4);
-					}
-				val=null;
-				isSolved=false;
+				status.setVisible(false);
+				try{
+					SudokuRun sr4 = new SudokuRun(getSudokuBee(), true);
+					sr4.start();
+				}catch(Exception ee){status.setVisible(true);};
 				}
 			});
 		status.no.addActionListener(new ActionListener(){
@@ -606,7 +591,7 @@ public class SudokuBee2{
 						generate=true;
 						gameMode=true;
 						try{
-						SudokuRun sr3 = new SudokuRun(getSudokuBee());
+						SudokuRun sr3 = new SudokuRun(getSudokuBee(), false);
 							sr3.start();
 							}
 						catch(Exception ee){
@@ -664,18 +649,21 @@ public class SudokuBee2{
 						isSolved=true;
 						board.changeCursor();
 						}
-					else if(exit.num==8){
+					else if(exit.num==8 || exit.num==12){
 						GP.setVisible(5);
 						isSolved=true;
 						}
-					else if(exit.num!=4 && exit.num!=6){
+					else if(exit.num!=4 && exit.num!=6 && exit.num!=11){
 						board.decompose();
 						board=null;
 						GP.setVisible(7);
 						}
-					else if(exit.num==4){
+					else if(exit.num==4 || exit.num==11){
 						GP.setVisible(5);
+						status.setVisible(true);
+						//board.btnEnable(true);
 						game.setVisible(false);
+						game.setVisible(-1);
 						}
 					else{
 						GP.setVisible(5);
@@ -716,6 +704,11 @@ public class SudokuBee2{
 					snd.loop();
 				}
 			});
+		options.left[2].addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				options.setGivenPercent(false);
+				}
+			});
 		options.right[0].addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				options.setSize(true);
@@ -728,6 +721,11 @@ public class SudokuBee2{
 					snd.stop();
 				else
 					snd.loop();
+				}
+			});
+		options.right[2].addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				options.setGivenPercent(true);
 				}
 			});
 		}
@@ -758,6 +756,9 @@ public class SudokuBee2{
 	public UIStatus getStatus(){
 		return status;
 	}
+	public void setStatus(UIStatus status){
+		this.status = status;
+	}
 	public generalPanel getGP(){
 		return GP;
 	}
@@ -773,12 +774,24 @@ public class SudokuBee2{
 	public boolean getIsSolved(){
 		return isSolved;
 	}
+	public UIPop getPop(){
+		return pop;
+	}
+	public void setPop(UIPop pop){
+		this.pop = pop;
+	}
 	public int[] getSubjects(){
 		int[] subs = {numEmp,numOnlook,numCycle};
 		return subs;
 	}
 	public String getCurrentFile(){
 		return curFile;
+	}
+	public int getGivenPercent(){
+		return options.percent*5;
+	}
+	public void setIsAns(boolean isAns){
+		this.isAns = isAns;
 	}
 	private void sop(Object obj){
 		System.out.println(obj+"");

@@ -28,8 +28,8 @@ public class UIBoard{
 		size=sudokuArray.length;
 		for(int ctr=0; ctr<size;ctr++){
 			for(int count=0; count<size;count++){
-				sudokuArray[ctr][count][0]=0;
-				sudokuArray[ctr][count][1]=1;
+				sudokuArray[ctr][count][0]=0; //3rd index 0 = value content
+				sudokuArray[ctr][count][1]=1; //3rd index 1 = ss or not;0 = ss,1 = not
 				}
 			}
 		}
@@ -44,7 +44,7 @@ public class UIBoard{
 		for(int ctr=0, X=startX, Y=startY; ctr<size; ctr++, Y+=inc, X=startX){
 			for(int count=0; count<size; count++, X+=inc){
 				String img="normal";
-				if(sudokuArray[ctr][count][1]==0)
+				if(sudokuArray[ctr][count][1]==0) // here is the proof that 3d index 1 = 0 is ss
 					img="given";
 				btn[ctr][count]=gp.gameButton(pane, "img/box/"+size+"x"+size+"/"+img+"/"+sudokuArray[ctr][count][0]+".png", X, Y);
 				if(setCursor && img.equals("normal"))
@@ -108,6 +108,14 @@ public class UIBoard{
 	protected int getAns(){
 		return ans;
 		}
+	protected void btnEnable(boolean enable){
+		for(int i=0; i<sudokuArray.length; i++){
+			for(int j=i; j<sudokuArray.length; j++){
+				btn[i][j].setEnabled(enable);
+				btn[j][i].setEnabled(enable);
+			}
+		}
+	}
 	protected void decompose(){
 		pane.removeAll();
 		board=null;

@@ -45,15 +45,15 @@ public class UIPop extends generalPanel{
 		btn=new JButton[9];
 		erase=addButton(panel, "img/box/misc/clear.png", 146,126);
 		cancel=addButton(panel, "img/box/misc/cancel.png", 293,126);
-		btn[0]=addButton(panel, "img/box/12x12/normal/1.png", 111,192);
-		btn[1]=addButton(panel, "img/box/12x12/normal/2.png", 184,192);
-		btn[2]=addButton(panel, "img/box/12x12/normal/3.png", 257,192);
-		btn[3]=addButton(panel, "img/box/12x12/normal/4.png", 330,192);
-		btn[4]=addButton(panel, "img/box/12x12/normal/5.png", 147,257);
-		btn[5]=addButton(panel, "img/box/12x12/normal/6.png", 220,257);
-		btn[6]=addButton(panel, "img/box/12x12/normal/7.png", 293,257);
-		btn[7]=addButton(panel, "img/box/12x12/normal/8.png", 184,322);
-		btn[8]=addButton(panel, "img/box/12x12/normal/9.png", 257,322);
+		btn[0]=addButton(panel, "img/box/9x9/pop/1.png", 111,192);
+		btn[1]=addButton(panel, "img/box/9x9/pop/2.png", 184,192);
+		btn[2]=addButton(panel, "img/box/9x9/pop/3.png", 257,192);
+		btn[3]=addButton(panel, "img/box/9x9/pop/4.png", 330,192);
+		btn[4]=addButton(panel, "img/box/9x9/pop/5.png", 147,257);
+		btn[5]=addButton(panel, "img/box/9x9/pop/6.png", 220,257);
+		btn[6]=addButton(panel, "img/box/9x9/pop/7.png", 293,257);
+		btn[7]=addButton(panel, "img/box/9x9/pop/8.png", 184,322);
+		btn[8]=addButton(panel, "img/box/9x9/pop/9.png", 257,322);
 		field=addTextField(panel, "", 220, 128,40,38);
 		}
 	private void twelveButtons(){

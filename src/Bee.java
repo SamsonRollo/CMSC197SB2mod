@@ -1,7 +1,8 @@
 import java.util.Random;
+import java.math.BigDecimal;
 class Bee{
 	private int[][][] solution;
-	private double fitness;
+	private BigDecimal fitness;
 	private Subgrid[] subgrid;
 	private Random rand=new Random();
 	Bee(Subgrid[] subgrid){
@@ -36,8 +37,8 @@ class Bee{
 			System.out.println("");
 			}
 		}
-	protected int getPenaltyValue(int type){
-		int penalty=0;
+	protected long getPenaltyValue(int type){
+		long penalty=0;
 		if(type==1 || type==2){ //Sum-Product without intrinsic sub-grid constraint	
 			int sumOfRows = 0;
 			int sumOfCols = 0;
@@ -47,14 +48,15 @@ class Bee{
 			long productOfSubs = 0;
 			long puzzleProduct = factorial(solution.length); //N!
 			int puzzleSum = (solution.length*(solution.length+1))/2; //(N(N+1))/2
+			//System.out.println(puzzleSum+" "+puzzleProduct);
 
 			for(int i = 0; i <solution.length; i++){
-				int curProRow = 1;
-				int curProCol = 1;
+				long curProRow = 1;
+				long curProCol = 1;
 				int curSumRow = 0;
 				int curSumCol = 0;
 
-				for(int j=0; j<solution.length; j++){ //row & column FIX THIS
+				for(int j=0; j<solution.length; j++){ 
 					curSumRow += solution[i][j][0]; //current Row
 					curSumCol += solution[j][i][0]; //current column
 					curProRow *= solution[i][j][0]; 
@@ -72,9 +74,9 @@ class Bee{
 				productOfCols += (curProCol-puzzleProduct);
 			}
 			if(type==2)
-				penalty = sumOfRows+sumOfCols+(int)productOfRows+(int)productOfCols+sumOfSubs+(int)productOfSubs;
+				penalty = sumOfRows+sumOfCols+productOfRows+productOfCols+sumOfSubs+productOfSubs;
 			else
-				penalty = sumOfRows+sumOfCols+(int)productOfRows+(int)productOfCols;
+				penalty = sumOfRows+sumOfCols+productOfRows+productOfCols;
 
 		}else{ //deafult: Missing numbers
 			customSet hor=new customSet();
@@ -94,7 +96,6 @@ class Bee{
 					}
 			}
 		}
-		//System.out.println(penalty);
 		return penalty;
 	}
 
@@ -111,22 +112,21 @@ class Bee{
 				curSub[1]*=solution[idxX][idxY][0];
 			}
 		}
-
 		return curSub;
 	}
 
 	private long factorial(int n){ // n>=0
-		if(n==0)
+		if(n<=0)
 			return 1;
 		return factorial(n-1)*n;
 	}
 	protected int[][][] getSolution(){
 		return solution;
 		}
-	protected void setFitness(double fit){
+	protected void setFitness(BigDecimal fit){
 		fitness=fit;
 		}
-	protected double getFitness(){
+	protected BigDecimal getFitness(){
 		return fitness;
 		}
 	protected int getElement(int j){

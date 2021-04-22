@@ -4,7 +4,7 @@ import javax.swing.JButton;
 public class UIExit extends generalPanel{
 	private JPanel pane;
 	private JLabel bg;
-	private String back[]={"exit","back2menu","new", "corrupt","invalid", "win", "saveError", "error", "solved", "filename", "reset"};
+	private String back[]={"exit","back2menu","new", "corrupt","invalid", "win", "saveError", "error", "solved", "filename", "reset", "exceed", "done"};
 	protected JButton yes, no, okay;
 	protected int num;
 	UIExit(JPanel pane, int num){

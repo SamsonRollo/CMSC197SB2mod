@@ -3,6 +3,7 @@ class Validator{
 	private Subgrid subgrid[];
 	private int subDimX;
 	private int subDimY;
+	private int numberOfGiven = 10; //default
 	Validator(int[][][] grid, Subgrid subgrid[]){
 		this.grid=grid;
 		this.subgrid=subgrid;
@@ -26,6 +27,33 @@ class Validator{
 	private void sop(Object obj){
 		System.out.println(obj+"");
 		}
+	protected int userPuzzleCheckValidity(int givenPercent){ // 1= ok, 0 = invalid input, -1 = givens exceed
+		this.numberOfGiven = (int)((grid.length*grid.length)*(double)((double)givenPercent/100));
+		int numberOfInputs = 0;
+		for(int i = 0; i<grid.length; i++){
+			for(int j=i; j<grid.length; j++){
+				if(numberOfInputs>numberOfGiven)
+					return -1;
+				if(grid[i][j][0]!=0){
+					grid[i][j][1]=0;
+					numberOfInputs++;
+				}
+				if(grid[j][i][0]!=0 && j!=i){
+					grid[j][i][1]=0;
+					numberOfInputs++;
+				}
+			}
+		}
+		if(numberOfInputs>numberOfGiven)
+			return -1;
+		if(!checkValidity()) //initial check
+			return 0;
+		if(numberOfInputs<numberOfGiven){ //add more inputs randomly if input is less
+			GenerateSudoku gs = new GenerateSudoku(this.grid, numberOfGiven, numberOfInputs);
+			updateGrid(gs.getSudoku());
+		}
+		return 1;
+	}
 	protected boolean checkValidity(){
 		customSet hor=new customSet();
 		customSet ver=new customSet();
@@ -59,6 +87,7 @@ class Validator{
 			}
 		return true;
 		}
+
 	protected boolean checkAnswer(){
 		customSet hor=new customSet();
 		customSet ver=new customSet();
@@ -91,5 +120,27 @@ class Validator{
 				}
 			}
 		return true;
+		}
+
+		protected int[][][] getSudoku(){
+			return this.grid;
+		}
+
+		protected int[][][] getCopy(int[][][] grid){
+			int[][][] copy = new int[grid.length][grid.length][2];
+
+			for(int i = 0; i<grid.length; i++){
+				for(int j=i; j<grid.length; j++){
+					copy[i][j][0] = grid[i][j][0];
+					copy[i][j][1] = grid[i][j][1];
+
+					if(i!=j){
+						copy[j][i][0] = grid[j][i][0];
+						copy[j][i][1] = grid[j][i][1];
+					}
+
+				}
+			}
+			return copy;
 		}
 	}
