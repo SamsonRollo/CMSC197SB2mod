@@ -48,7 +48,6 @@ class Bee{
 			long productOfSubs = 0;
 			long puzzleProduct = factorial(solution.length); //N!
 			int puzzleSum = (solution.length*(solution.length+1))/2; //(N(N+1))/2
-			//System.out.println(puzzleSum+" "+puzzleProduct);
 
 			for(int i = 0; i <solution.length; i++){
 				long curProRow = 1;

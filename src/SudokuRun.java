@@ -86,8 +86,6 @@ public class SudokuRun extends Thread{
 				sudokuBee.setStatus(null);
 				sudokuBee.getPop().decompose();
 				sudokuBee.setPop(null);
-				// sudokuBee.getBoard().decompose();
-				// sudokuBee.setBoard(null);
 				sudokuBee.boardRelay(sudoku,false);
 				sudokuBee.getGame().setVisible(0);
 				sudokuBee.popUpRelay(sudoku.length);
@@ -135,8 +133,7 @@ public class SudokuRun extends Thread{
 				try{
 					abc.join();
 				}catch(InterruptedException ie){}
-				
-				//while(!abc.isDone()); //sentinel to wait for abc to be done
+
 				double end=(printer.getTime());
 				double seconds=((end-startTime)/1000);
 				printer.print("\nCycles:\t "+abc.getCycles()+"\nTime:\t"+seconds);
@@ -180,9 +177,6 @@ public class SudokuRun extends Thread{
 
 		sudokuBee.getGame().setVisible(0);
 		sudokuBee.setStart(false);
-
-		//while(!start); //add as running thread unless interrupted by other means
-		//}
 	}
 	protected void delay(int newDelay){
 		try{
