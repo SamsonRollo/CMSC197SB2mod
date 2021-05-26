@@ -19,6 +19,6 @@ log
 .byebug_history
 
 
-.class
-.psd
-.log
+*.class
+*.psd
+*.log
