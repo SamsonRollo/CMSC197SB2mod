@@ -799,6 +799,9 @@ public class SudoCuckoo{
 	public int getGivenPercent(){
 		return options.percent*5;
 	}
+	public int getPenaltyType(){
+		return options.penalID;
+	}
 	public void setIsAns(boolean isAns){
 		this.isAns = isAns;
 	}

@@ -43,39 +43,26 @@ class Bee{
 			int sumOfRows = 0;
 			int sumOfCols = 0;
 			int sumOfSubs = 0;
-			long productOfRows = 0; //sum of product
-			long productOfCols = 0;
-			long productOfSubs = 0;
-			long puzzleProduct = factorial(solution.length); //N!
 			int puzzleSum = (solution.length*(solution.length+1))/2; //(N(N+1))/2
 
 			for(int i = 0; i <solution.length; i++){
-				long curProRow = 1;
-				long curProCol = 1;
 				int curSumRow = 0;
 				int curSumCol = 0;
 
 				for(int j=0; j<solution.length; j++){ 
 					curSumRow += solution[i][j][0]; //current Row
 					curSumCol += solution[j][i][0]; //current column
-					curProRow *= solution[i][j][0]; 
-					curProCol *= solution[j][i][0];
 				}
-				if(type==2){ // w/o subgrid constraint
-					long[] subAns = subgridCompute(i);
-					sumOfSubs += (subAns[0]-puzzleSum);
-					productOfSubs += (subAns[1]-puzzleProduct);
-				}
+				if(type==2) // w/o subgrid constraint
+					sumOfSubs += Math.abs(subgridCompute(i)-puzzleSum);
 
-				sumOfRows += (curSumRow-puzzleSum);
-				sumOfCols += (curSumCol-puzzleSum);
-				productOfRows += (curProRow-puzzleProduct);
-				productOfCols += (curProCol-puzzleProduct);
+				sumOfRows += Math.abs(curSumRow-puzzleSum);
+				sumOfCols += Math.abs(curSumCol-puzzleSum);
 			}
 			if(type==2)
-				penalty = sumOfRows+sumOfCols+productOfRows+productOfCols+sumOfSubs+productOfSubs;
+				penalty = sumOfRows+sumOfCols+sumOfSubs;
 			else
-				penalty = sumOfRows+sumOfCols+productOfRows+productOfCols;
+				penalty = sumOfRows+sumOfCols;
 
 		}else{ //deafult: Missing numbers
 			customSet hor=new customSet();
@@ -98,8 +85,8 @@ class Bee{
 		return penalty;
 	}
 
-	private long[] subgridCompute(int subgridID){ //we assume a perfect square puzzle
-		long[] curSub = {0, 1};//0 = sum, 1= product
+	private long subgridCompute(int subgridID){ //we assume a perfect square puzzle
+		long curSub = 0;
 		int sub = (int)Math.sqrt(solution.length);
 
 		for(int i = 0; i<sub; i++){
@@ -107,18 +94,12 @@ class Bee{
 				int idxX = ((int)Math.floor(subgridID/sub))*sub+i;
 				int idxY = (int)((subgridID+sub)%sub)*sub+j;
 				
-				curSub[0]+=solution[idxX][idxY][0];
-				curSub[1]*=solution[idxX][idxY][0];
+				curSub+=solution[idxX][idxY][0];
 			}
 		}
 		return curSub;
 	}
 
-	private long factorial(int n){ // n>=0
-		if(n<=0)
-			return 1;
-		return factorial(n-1)*n;
-	}
 	protected int[][][] getSolution(){
 		return solution;
 		}

@@ -17,7 +17,10 @@ public class SudokuRun extends Thread{
 			sudoCuckoo.getSolve().decompose();
 			sudoCuckoo.setSolve(null);
 			}
-		catch(Exception e){}
+		catch(Exception e){
+			penaltyType =sudoCuckoo.getPenaltyType();
+		}
+		System.out.println(penaltyType);
 		sudoCuckoo.getGame().setVisible(1);
 
 		if(sudoCuckoo.getGameMode() && !userGenerate){

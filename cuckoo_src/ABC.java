@@ -15,6 +15,7 @@ class ABC extends Thread{
 	private String information="";
 	private GreedySelection greedy=new GreedySelection();
 	private PrintResult printer;
+//	private Validator validator;
 
 	public ABC(PrintResult printer, int[][][] problem,int employedSize, int onlookerSize, int maxCycle, int penlatyType){
 
@@ -29,7 +30,7 @@ class ABC extends Thread{
 		scoutSize=(int)(0.1*employedSize);
 		greedy.setPenaltyType(penlatyType);
 		initialization();
-
+		//validator = new Validator(problem, subgrid);
 	}
 	
 	public void run(){
@@ -37,7 +38,7 @@ class ABC extends Thread{
 		double sumFitness=0, beeFitness=0;
 
 		//actual
-		for(cycle=0; cycle<maxCycle && maxFit!=1; cycle++){
+		for(cycle=0; cycle<maxCycle && maxFit!=1; cycle++){ //(maxFit!=1 || !(maxFit==1 && validator.checkAnswer())); cycle++){
 			sumFitness=0;
 
 			//employed bee phase
@@ -92,7 +93,8 @@ class ABC extends Thread{
 				}
 			printer.print((cycle+1)+"\t"+bestBee.getFitness());
 			v=null;
-			}
+			//validator.updateGrid(bestBee.getSolution());
+		}
 		printer.print((cycle)+"\t"+bestBee.getFitness());
 	}
 	
