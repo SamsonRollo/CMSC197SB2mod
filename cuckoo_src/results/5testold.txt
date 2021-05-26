@@ -1,0 +1,140 @@
+sabuncu5
+90 1.293 true
+87 0.921 true
+96 1.0 true
+84 0.733 true
+46 0.393 true
+
+sabuncu7
+822 6.505 true
+1164 49.5 true
+3569 30.775 true
+3028 65.593 true
+1925 16.375 true
+
+sabuncu8
+861 8.293 true
+4223 37.218 true
+2493 61.115 true
+4523 39.103 true
+392 3.304 true
+
+sabuncu9
+5687 90.493 true
+1904 16.408 true
+7490 105.121 true
+1400 11.505 true
+402 3.32 true
+
+sabuncu10
+107 0.97 true
+56 0.544 true
+84 0.795 true
+79 0.699 true
+61 0.536 true
+
+sabuncu1
+43 0.366 true
+32 0.326 true
+31 0.345 true
+62 0.551 true
+85 0.784 true
+
+sabuncu2
+675 5.384 true
+322 2.788 true
+578 44.746 true
+876 7.108 true
+1018 8.176 true
+
+sabuncu3
+1617 13.803 true
+387 3.248 true
+742 5.975 true
+1025 48.515 true
+1186 10.004 true
+
+sabuncu4
+1812 15.733 true
+1175 49.69 true
+2869 25.267 true
+1134 9.54 true
+20135 306.649 true
+
+sabuncu6
+100000 1587.887 false
+6591 96.679 true
+1579 12.524 true
+100000 5597.719 false
+2492 60.693 true
+
+platinumblond
+45663 785.496 true
+7541 106.15 true
+100000 1685.357 false
+100000 1710.877 false
+100000 -234399.262 false
+
+goldennugget
+100000 161657.393 false
+100000 1609.644 false
+100000 1699.446 false
+11073 133.57 true
+100000 5668.926 false
+
+aiescargot
+8232 153.388 true
+7518 106.149 true
+10790 137.34 true
+2410 59.868 true
+3310 27.754 true
+
+coly013
+28466 500.273 true
+100000 1799.179 false
+100000 1902.537 false
+100000 -234117.099 false
+100000 1703.772 false
+
+reddwarf
+100000 1623.388 false
+100000 5571.326 false
+25039 387.342 true
+5385 46.14 true
+100000 1648.68 false
+
+tarx0134
+100000 1722.533 false
+3994 73.61 true
+100000 5723.014 false
+100000 1806.022 false
+100000 1683.074 false
+
+sabuncu1
+100000 5715.766 false
+100000 1779.545 false
+100000 1707.206 false
+100000 1690.19 false
+100000 5700.723 false
+
+test
+34 2.452 true
+39 1.794 true
+42 1.775 true
+34 1.499 true
+39 1.637 true
+
+File
+205 8.474 true
+217 8.152 true
+197 7.432 true
+201 7.754 true
+228 8.508 true
+
+File
+236 9.607 true
+364 14.222 true
+269 10.212 true
+201 7.528 true
+237 8.528 true
+
